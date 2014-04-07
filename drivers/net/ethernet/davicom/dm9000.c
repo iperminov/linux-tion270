@@ -1565,7 +1565,7 @@ dm9000_probe(struct platform_device *pdev)
 
 		if (id_val == DM9000_ID)
 			break;
-		dev_err(db->dev, "read wrong id 0x%08x\n", id_val);
+		dev_dbg(db->dev, "read wrong id 0x%08x\n", id_val);
 	}
 
 	if (id_val != DM9000_ID) {
