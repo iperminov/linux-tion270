@@ -390,8 +390,6 @@ static int ucb1400_ts_probe(struct platform_device *pdev)
 	input_set_abs_params(ucb->ts_idev, ABS_Y, 0, y_res, 0, 0);
 	input_set_abs_params(ucb->ts_idev, ABS_PRESSURE, 0, 0, 0, 0);
 
-	ucb1400_ts_stop(ucb);
-
 	error = request_threaded_irq(ucb->irq, NULL, ucb1400_irq,
 				     IRQF_TRIGGER_RISING | IRQF_ONESHOT,
 				     "UCB1400", ucb);
@@ -400,6 +398,8 @@ static int ucb1400_ts_probe(struct platform_device *pdev)
 			"unable to grab irq%d: %d\n", ucb->irq, error);
 		goto err_free_devs;
 	}
+
+	ucb1400_ts_stop(ucb);
 
 	error = input_register_device(ucb->ts_idev);
 	if (error)
