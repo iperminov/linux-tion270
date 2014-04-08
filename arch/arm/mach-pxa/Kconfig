@@ -271,6 +271,234 @@ config MACH_VPAC270
 	help
 	  PXA270 based Single Board Computer.
 
+menuconfig MACH_TION270X
+	bool "Zao ZEO Tion270/Tion-Pro270"
+	select PXA27x
+	select HAVE_PWM
+	select IWMMXT
+	help
+	  PXA270 based Single Board Computer by Zao ZEO
+
+if MACH_TION270X
+
+choice
+	prompt "Board variant"
+	default MACH_TION_PRO270
+	help
+	  Select one of the Tion270x board variants.
+
+config MACH_TION270
+	bool "Tion270"
+	depends on MACH_TION270X
+	help
+	  Tion270 board.
+
+config MACH_TION_PRO270
+	bool "Tion-Pro270"
+	depends on MACH_TION270X
+	help
+	  Tion-Pro270 board.
+
+endchoice
+
+config TION270_FLASH
+	bool "Flash MTD partitions"
+	default y
+	depends on MACH_TION270X && MTD_PHYSMAP
+	help
+	  Say Y to enable Flash MTD partitions.
+
+config TION270_DM9000
+	bool "Ethernet (DM9000)"
+	default y
+	depends on MACH_TION270X && DM9000
+	help
+	  Say Y to enable DM9000 based Ethernet support.
+
+config TION270_FFUART
+	bool "Serial port 1 (FFUART)"
+	default y
+	depends on MACH_TION270X && SERIAL_PXA
+	help
+	  Say Y to enable serial port 1 (full-function COM on Tion-Pro270).
+
+config TION270_BTUART
+	bool "Serial port 2 / RS-485 (BTUART)"
+	default y
+	depends on MACH_TION270X && SERIAL_PXA
+	help
+	  Say Y to enable serial port 2 (RS-485 on Tion-Pro270).
+
+config TION270_STUART
+	bool "Serial port 3 (STUART)"
+	default y
+	depends on MACH_TION270X && SERIAL_PXA
+	help
+	  Say Y to enable serial port 3 (internal serial port on Tion-Pro270).
+
+config TION270_I2C
+	bool "I2C bus and devices (including RTC)"
+	default y
+	depends on MACH_TION270X && I2C_PXA
+	help
+	  Say Y to enable Tion270 I2C bus and devices (including RTC on Tion-Pro270).
+
+config TION270_I2C_RTC_M41T00
+	bool "RTC M41T00"
+	default y
+	depends on TION270_I2C && RTC_DRV_DS1307
+	help
+	  Say Y to enable M41T00 chip support (RTC on Tion-Pro270).
+
+config TION270_I2C_POWER
+	bool "Power I2C bus and devices"
+	default y
+	depends on MACH_TION270X && I2C_PXA
+	help
+	  Say Y to enable Tion270 Power I2C bus (currently no devices, bus support only).
+
+config TION270_SPI
+	bool "SPI bus and devices"
+	default y
+	depends on MACH_TION270X && SPI_PXA2XX
+	help
+	  Say Y to enable SPI support.
+
+config TION270_MMC
+	bool "MMC/SD card"
+	default y
+	depends on MACH_TION270X && MMC_PXA
+	help
+	  Say Y to enable MMC/SD card support.
+
+comment "PCMCIA isn't supported yet"
+	depends on MACH_TION270X && MACH_TION270
+
+config TION270_USB_HOST
+	bool
+	depends on MACH_TION270X
+
+config TION270_USB_P1_HOST
+	bool
+	depends on MACH_TION270X
+
+config TION270_USB_P2_HOST
+	bool
+	depends on MACH_TION270X
+
+config TION270_USB_P2_GADGET
+	bool
+	depends on MACH_TION270X
+
+choice
+	prompt "USB"
+	default TION270_USB_HOST_HOST
+	depends on MACH_TION270X && (USB_OHCI_HCD || USB_PXA27X)
+	help
+	  Select USB configuration.
+
+config TION270_USB_NONE
+	bool "None"
+
+config TION270_USB_HOST_HOST
+	bool "Two USB hosts (ports 1 and 2)"
+	depends on MACH_TION270X && USB_OHCI_HCD
+	select TION270_USB_HOST
+	select TION270_USB_P1_HOST
+	select TION270_USB_P2_HOST
+
+config TION270_USB_HOST_GADGET
+	bool "USB host (port 1) + USB gadget (port 2)"
+	depends on MACH_TION270X && USB_OHCI_HCD && USB_PXA27X
+	select TION270_USB_HOST
+	select TION270_USB_P1_HOST
+	select TION270_USB_P2_GADGET
+
+config TION270_USB_GADGET_ONLY
+	bool "USB gadget only (port 2)"
+	depends on MACH_TION270X && USB_PXA27X
+	select TION270_USB_P2_GADGET
+
+endchoice
+
+config TION270_AC97
+	bool "Audio and touchscreen (AC97/UCB1400)"
+	default y
+	depends on MACH_TION270X && SND_PXA2XX_AC97
+	help
+	  Say Y to enable AC97/UCB1400 audio support and touchscreen.
+
+config TION270_UCB1400
+	bool "UCB1400 touchscreen"
+	default y
+	depends on MACH_TION270X && TION270_AC97 && TOUCHSCREEN_UCB1400
+	help
+	  Say Y to enable UCB1400 touchscreen.
+
+comment "WM97xx isn't supported yet"
+	depends on MACH_TION270X
+
+config TION270_FB
+	bool "LCD/VGA"
+	default y
+	depends on MACH_TION270X && FB_PXA
+	help
+	  Say Y to enable LCD/VGA framebuffer suppor.
+
+config TION270_BACKLIGHT_PWM
+	bool "PWM-based LCD backlight"
+	default y
+	depends on MACH_TION270X && BACKLIGHT_PWM
+	help
+	  Say Y to enable PWM-based LCD backlight support (Tion-Pro270 implementation).
+
+config TION270_LEDS
+	bool "LEDs on GPIO 54 and 107 (Tion-Pro270 v2 only)"
+	default y
+	depends on MACH_TION270X && MACH_TION_PRO270 && LEDS_GPIO
+	help
+	  A red LED on GPIO 54 (off by default) and a green LED on GPIO 107
+	  (heartbeat by default).
+	  Say Y to enable these LED devices.
+
+config TION270_EXT
+	bool "Sample extensions"
+	default n
+	depends on MACH_TION270X
+	help
+	  Say Y to enable sample support of the hardware, which isn't in the base
+	  configuration of Tion-Pro270 board, but can be connected externally.
+
+if TION270_EXT
+
+config TION270_EXT_KEYBOARD
+	bool "3-keys direct keyboard (GPIOs 93, 94, 96)"
+	default y
+	depends on MACH_TION270X && TION270_EXT && KEYBOARD_PXA27x
+	help
+	  A sample 3-keys keyboard (PXA27x direct keys) attached to GPIOs 93, 94, 96.
+	  Say Y to enable this keyboard device.
+
+config TION270_EXT_MCP2515
+	bool "MCP2515 CAN controller (EXPERIMENTAL)"
+	default n
+	depends on MACH_TION270X && TION270_EXT && TION270_SPI && CAN_MCP251X
+	help
+	  MCP2515 CAN controller attached to SPI bus 1,
+	  CS on GPIO 108, IRQ on GPIO 105.
+
+config TION270_EXT_MCP2515_OSC_FREQ
+	int "MCP2515 oscillator frequency, Hz"
+	range 1000000 40000000
+	default 16000000
+	depends on TION270_EXT_MCP2515
+	help
+	  MCP2515 CAN controller oscillator frequency, Hz.
+
+endif # TION270_EXT
+
+endif # MACH_TION270X
+
 comment "End-user Products (sorted by vendor name)"
 
 config MACH_H4700
