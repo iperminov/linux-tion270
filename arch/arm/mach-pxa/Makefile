@@ -60,6 +60,7 @@ obj-$(CONFIG_MACH_COLIBRI_EVALBOARD)	+= colibri-evalboard.o
 obj-$(CONFIG_MACH_COLIBRI_PXA270_INCOME)	+= colibri-pxa270-income.o
 obj-$(CONFIG_MACH_COLIBRI300)	+= colibri-pxa3xx.o colibri-pxa300.o
 obj-$(CONFIG_MACH_COLIBRI320)	+= colibri-pxa3xx.o colibri-pxa320.o
+obj-$(CONFIG_MACH_TION270X) += tion270lib.o tion270.o
 obj-$(CONFIG_MACH_VPAC270)	+= vpac270.o
 
 # End-user Products
