@@ -1,7 +1,7 @@
 VERSION = 3
 PATCHLEVEL = 12
 SUBLEVEL = 17
-EXTRAVERSION =
+EXTRAVERSION = -tion270-community
 NAME = One Giant Leap for Frogkind
 
 # *DOCUMENTATION*
