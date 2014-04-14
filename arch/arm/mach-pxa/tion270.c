@@ -145,12 +145,21 @@ static mfp_cfg_t tion270_keyboard_pin_config[] __initdata = {
 	GPIO96_KP_DKIN_3	| WAKEUP_ON_LEVEL_HIGH,
 };
 
+static struct matrix_keymap_data tion270_matrix_keymap_data = {
+	.keymap		= NULL,
+	.keymap_size	= 0,
+};
+
 static struct pxa27x_keypad_platform_data tion270_keypad_platform_data = {
-	.direct_key_num = 4,
+	/* .matrix_keymap_data should be not NULL regardless of both rows and cols == 0 */
+	.matrix_keymap_data	= &tion270_matrix_keymap_data,
+	.matrix_key_rows	= 0,
+	.matrix_key_cols	= 0,
+	.direct_key_num		= 4,
 	.direct_key_map = {
 		KEY_A, KEY_B, KEY_RESERVED, KEY_C
 	},
-	.debounce_interval = 30,
+	.debounce_interval	= 30,
 };
 
 static void __init tion270_keyboard_init(void) {
