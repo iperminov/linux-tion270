@@ -272,12 +272,12 @@ config MACH_VPAC270
 	  PXA270 based Single Board Computer.
 
 menuconfig MACH_TION270X
-	bool "Zao ZEO Tion270/Tion-Pro270"
+	bool "ZEO Tion270/Tion-Pro270"
 	select PXA27x
 	select HAVE_PWM
 	select IWMMXT
 	help
-	  PXA270 based Single Board Computer by Zao ZEO
+	  PXA270 based Single Board Computer by ZEO
 
 if MACH_TION270X
 
