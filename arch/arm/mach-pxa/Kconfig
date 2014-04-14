@@ -461,6 +461,16 @@ config TION270_LEDS
 	  (heartbeat by default).
 	  Say Y to enable these LED devices.
 
+config TION270_PWM
+	bool "Setup PWM 1, 2 and 3 outputs"
+	default y
+	depends on MACH_TION270X && PWM
+	help
+	  PWM signal on PWM 1, 2 and 3 outputs can be controlled from the userspace
+	  via the SYSFS PWM class. To get actual PWM signal on these pins they should be
+	  configured as PWM outputs.
+	  Say Y to configure the PWM output pins.
+
 config TION270_EXT
 	bool "Sample extensions"
 	default n

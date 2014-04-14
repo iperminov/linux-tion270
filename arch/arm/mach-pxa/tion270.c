@@ -242,9 +242,9 @@ static void __init tion270_init(void) {
 	tion270_touchscreen_init();
 	tion270_pwm_backlight_init(NULL);
 	tion270_video_init();
-
-	tion270_keyboard_init();
 	tion270_gpio_leds_init();
+	tion270_pwm_init();
+	tion270_keyboard_init();
 }
 
 MACHINE_START(TION270,

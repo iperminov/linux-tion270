@@ -929,4 +929,26 @@ void __init tion270_gpio_leds_init(void) {
 	platform_device_register(&tion270_gpio_leds_device);
 }
 
-#endif /* defined(CONFIG_TION270_EXT_LEDS) */
+#endif /* defined(CONFIG_TION270_LEDS) */
+
+#if defined(CONFIG_TION270_PWM)
+
+static mfp_cfg_t tion270_pwm_pin_config[] __initdata = {
+	/* Except for PWM0 - it is used for backlight */
+	GPIO17_PWM1_OUT,
+	GPIO11_PWM2_OUT,
+	GPIO12_PWM3_OUT,
+};
+
+void __init tion270_pwm_init(void) {
+	/*
+	 * PWM hardware is initialized by the generic PXA code,
+	 * we have to initialize PWM pins only.
+	 */
+
+	printk(KERN_DEBUG "%s: configuring PWM outputs\n", __func__);
+
+	pxa2xx_mfp_config(ARRAY_AND_SIZE(tion270_pwm_pin_config));
+}
+
+#endif /* defined(CONFIG_TION270_PWM) */

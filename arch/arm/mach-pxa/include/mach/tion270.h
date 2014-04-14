@@ -189,4 +189,10 @@ void tion270_gpio_leds_init(void);
 static inline void tion270_gpio_leds_init(void) { }
 #endif /* defined(CONFIG_TION270_LEDS) */
 
+#if defined(CONFIG_TION270_PWM)
+void tion270_pwm_init(void);
+#else
+static inline void tion270_pwm_init(void) { }
+#endif /* defined(CONFIG_TION270_PWM) */
+
 #endif /* _TION270_H_ */
