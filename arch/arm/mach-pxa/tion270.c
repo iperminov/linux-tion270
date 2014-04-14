@@ -185,8 +185,6 @@ static mfp_cfg_t tion270_mcp2515_pin_config[] __initdata = {
 
 static struct mcp251x_platform_data tion270_mcp251x_platform_data = {
 	.oscillator_frequency = CONFIG_TION270_EXT_MCP2515_OSC_FREQ,
-	.transceiver_enable = NULL,		/* Always enable */
-	/* Done by driver: .irq_flags = IRQF_TRIGGER_FALLING, */
 };
 
 static struct pxa2xx_spi_chip tion270_mcp2515_controller_data = {
